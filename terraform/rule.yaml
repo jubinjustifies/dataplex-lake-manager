@@ -1,0 +1,10 @@
+naming_conventions:
+  lake:
+    pattern: "^.+-lake$"
+    description: "Lake name must end with 'lake' followed by digits (e.g., lake1, lake2)."
+  zone:
+    pattern: "^.+-(raw|curated|consumption|restricted|experimentation)-zone$"
+    description: "Zone name must follow the pattern '-raw-zone' or '-curated-zone'."
+  asset:
+    pattern: ""
+    description: "Asset name must follow the pattern 'test-bucket-xxxx' or 'test-dataset-xxxx' with lowercase letters and digits."

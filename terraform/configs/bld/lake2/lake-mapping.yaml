@@ -1,0 +1,87 @@
+metadata:
+  project_id: burner-jubsharm
+  region: us-central1
+  environment: bld
+lakes:
+  - name: lake2
+    display_name: lake2
+    description: Lake 2
+    labels:
+      - label1: value1
+        label2: value2
+    iam_bindings:
+      - role: 'roles/dataplex.viewer'
+        members:
+          - 'user:jubsharm@publicisgroupe.net'
+      - role: 'roles/dataplex.editor'
+        members:
+          - 'user:jubsharm@publicisgroupe.net'
+    zones:
+      - name: lake2-raw
+        display_name: lake2 raw
+        type: RAW
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+            - '**.csv'
+            - '**.json'
+          exclude_patterns:
+            - '**/temp/**'
+          schedule: '0 */6 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets:
+          - name: test-bucket-3d0d79d9
+            display_name: test bucket 3d0d79d9
+            resource_spec:
+              type: STORAGE_BUCKET
+              name: 'projects/burner-jubsharm/buckets/test-bucket-3d0d79d9'
+            discovery_spec:
+              enabled: true
+              include_patterns:
+                - "**/customer_raw_data/*.csv"
+              exclude_patterns:
+                - "**/_temp/**"
+              schedule: '0 */6 * * *'
+      - name: lake2-curated
+        display_name: lake2 curated
+        type: CURATED
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+            - '**.parquet'
+          exclude_patterns:
+          schedule: '0 0 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets:
+          - name: test-dataset-a3d42359
+            display_name: test dataset a3d42359
+            resource_spec:
+              type: BIGQUERY_DATASET
+              name: 'projects/burner-jubsharm/datasets/test_dataset_a3d42359'
+            discovery_spec:
+              enabled: true
+              include_patterns:
+              exclude_patterns:
+              schedule: '0 1 * * *'

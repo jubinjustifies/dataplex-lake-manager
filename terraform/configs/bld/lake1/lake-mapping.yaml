@@ -1,0 +1,144 @@
+metadata:
+  project_id: burner-jubsharm
+  region: us-central1
+  environment: bld
+lakes:
+  - name: customer-accounts-lake
+    display_name: Customer Accounts Lake
+    description: Lake referencing Customer Account data assets
+    labels:
+      - label1: value1
+        label2: value2
+    iam_bindings:
+      - role: 'roles/dataplex.viewer'
+        members:
+          - 'user:jubsharm@publicisgroupe.net'
+      - role: 'roles/dataplex.editor'
+        members:
+          - 'user:jubsharm@publicisgroupe.net'
+    zones:
+      - name: customer-accounts-raw-zone
+        display_name: Customer Accounts Raw Zone
+        type: RAW
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+          exclude_patterns:
+          schedule: '0 */6 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets:
+          - name: raw-customer-onboarding
+            display_name: Raw Customer Onboarding
+            resource_spec:
+              type: BIGQUERY_DATASET
+              name: 'projects/burner-jubsharm/datasets/raw_dataset'
+            discovery_spec:
+              enabled: true
+              include_patterns:
+              exclude_patterns:
+              schedule: '0 */6 * * *'
+      - name: customer-accounts-curated-zone
+        display_name: Customer Accounts Curated Zone
+        type: CURATED
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+          exclude_patterns:
+          schedule: '0 0 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets:
+          - name: curated-account-master
+            display_name: Curated Account Master
+            resource_spec:
+              type: BIGQUERY_DATASET
+              name: 'projects/burner-jubsharm/datasets/curated_dataset'
+            discovery_spec:
+              enabled: true
+              include_patterns:
+              exclude_patterns:
+              schedule: '0 1 * * *'
+      - name: customer-accounts-consumption-zone
+        display_name: Customer Accounts Consumption Zone
+        type: CURATED
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+          exclude_patterns:
+          schedule: '0 0 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets: []
+      - name: customer-accounts-restricted-zone
+        display_name: Customer Accounts Restricted Zone
+        type: CURATED
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+          exclude_patterns:
+          schedule: '0 0 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets: []
+      - name: customer-accounts-experimentation-zone
+        display_name: Customer Accounts Experimentation Zone
+        type: CURATED
+        labels:
+          - label1: value1
+            label2: value2
+        resource_spec:
+          location_type: SINGLE_REGION
+        discovery_spec:
+          enabled: true
+          include_patterns:
+          exclude_patterns:
+          schedule: '0 0 * * *'
+          iam_bindings:
+            - role: 'roles/dataplex.dataReader'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+            - role: 'roles/dataplex.dataWriter'
+              members:
+                - 'user:jubsharm@publicisgroupe.net'
+        assets: []
